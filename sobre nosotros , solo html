@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croky - Sobre Nosotros</title>
+</head>
+<body bgcolor="white" text="black" link="#b30000" vlink="#b30000" alink="#e6b800">
+    <!-- Encabezado con navegación -->
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td bgcolor="#800000" height="100" style="padding-left: 20px;">
+                <font face="Arial" size="6" color="white">
+                    <b>CROKY</b>
+                </font>
+                <br>
+                <font face="Arial" size="3" color="white">
+                    <i>Sabor que perdura desde 1995</i>
+                </font>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" height="40" bgcolor="#f0f0f0">
+                <font face="Arial" size="3">
+                    <a href="#inicio"><b>Inicio</b></a> | 
+                    <a href="#menu"><b>Menú</b></a> | 
+                    <a href="#sobre-nosotros"><b>Sobre Nosotros</b></a> | 
+                    <a href="#contacto"><b>Contacto</b></a> | 
+                    <a href="#ubicacion"><b>Ubicación</b></a>
+                </font>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Contenido principal -->
+    <table width="90%" align="center" border="0" cellpadding="20" cellspacing="0">
+        <tr>
+            <td width="60%" valign="top">
+                <font face="Arial" size="5" color="#800000">
+                    <b>Sobre Nosotros</b>
+                </font>
+                <br><br>
+                <font face="Arial" size="3">
+                    Estado 1995. Cuando hubo un interruptor propio, transporte una cámara de control. No entrega a todos que la nueva cantidad y el mercado de cuidados son las garantías de mejor conocimientos como el financier de los servicios. Utilizamos equipamiento con la técnica de personalización para respetar los siguientes colaboradores: personalización, diseño envídeo en todo plazo del contrato; personalización de cualquier tipo de trabajo; etc.  
+                    <br><br>
+                    En caso de varios recursos cambios, creemos organización profesionalizada que participan en la economía de nuestros clientes.
+                </font>
+            </td>
+            <td width="40%" align="center" valign="top">
+                <img src="croky.png" alt="Restaurante Croky" width="300">
+            </td>
+        </tr>
+    </table>
+
+    <br><br>
+
+    <!-- Sección de reseñas -->
+    <center>
+        <h2><font color="#800000">RESEÑAS</font></h2>
+        <hr width="200" color="black">
+        <hr width="180" color="#ffcc00">
+        <hr width="200" color="black">
+    </center>
+
+    <br><br>
+
+    <table border="1" width="90%" align="center" cellpadding="15" cellspacing="10">
+        <tr>
+            <!-- Reseña 1 -->
+            <td align="center" bgcolor="#EDEDED">
+                <p><font size="5" color="#ffcc00">”</font></p>
+                <p align="justify">
+                    ¡Una tradición familiar! Llevamos viniendo a Croky desde que mis hijos eran pequeños 
+                    y ahora los traemos a sus hijos. El pollo broaster es simplemente perfecto: crujiente 
+                    por fuera, jugoso por dentro y con ese sabor inigualable. El arroz chino es el mejor 
+                    de la ciudad, sin duda. Un clásico que nunca defrauda.
+                </p>
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>
+                    <img src="sofia.jpg" width="70" height="70" border="1"><br>
+                    <b>Sofía Figueroa</b>
+                </p>
+            </td>
+
+            <!-- Reseña 2 -->
+            <td align="center" bgcolor="#EDEDED">
+                <p><font size="5" color="#ffcc00">”</font></p>
+                <p align="justify">
+                    ¡Más que comida, es una experiencia! Celebré mi cumpleaños aquí y el trato fue 
+                    excepcional. La comida es deliciosa (recomiendo totalmente las alitas), pero lo 
+                    que más me gusta es el ambiente acogedor y familiar. Se nota la pasión y los años 
+                    de experiencia. ¡Volveremos pronto!
+                </p>
+                <p>⭐⭐⭐⭐⭐</p>
+                <p>
+                    <img src="laura.jpg" width="70" height="70" border="1"><br>
+                    <b>Laura Hernandez</b>
+                </p>
+            </td>
+
+            <!-- Reseña 3 -->
+            <td align="center" bgcolor="#EDEDED">
+                <p><font size="5" color="#ffcc00">”</font></p>
+                <p align="justify">
+                    Auténtico y consistente. Después de años de vivir en la ciudad, Croky sigue siendo 
+                    mi referencia para un pollo broaster de calidad. Siempre fresco, siempre sabroso. 
+                    El único 'problema' es que siempre quiero repetir. Un lugar confiable para una 
+                    comida rápida pero que sabe a casero.
+                </p>
+                <p>⭐⭐⭐⭐☆</p>
+                <p>
+                    <img src="joseph.jpg" width="70" height="70" border="1"><br>
+                    <b>Joseph Alvarez</b>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <br><br>
+
+    <!-- dejar un comentario -->
+
+    <table width="90%" align="center" border="0" cellpadding="20" cellspacing="0">
+        <tr>
+            <td width="60%" valign="top">
+                <font face="Arial" size="5" color="#800000">
+                    <b>Deja una reseña</b>
+                </font>
+                <br><br> 
+    
+	    <form onsubmit="mostrarMensaje(); return false;">
+
+
+	        <label for="nombre">Nombre: </label>
+        	<input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Carlos" required> <br><br>
+     
+	        <label for="correo">Correo electrónico: </label>
+	        <input type="email" id="correo" name="correo" placeholder="Ej: juan_carlos@gmail.com" required><br><br>
+	
+	        <!-- Mensaje -->
+	        <label for="mensaje">Mensaje:</label><br>
+	        <textarea id="mensaje" name="mensaje" rows="5" cols="40" required></textarea><br><br>
+
+	        <!-- Botón -->
+	        <input type="submit" value="Enviar">
+	    </form>
+
+	     <p id="mensaje-exito" style="color: green; font-weight: bold;"></p>
+
+  	  <script>
+    	    function mostrarMensaje() {
+     	       // Capturamos el nombre escrito
+       	     let nombre = document.getElementById("nombre").value;
+            
+       	     // Mostramos el mensaje en el párrafo
+       	     document.getElementById("mensaje-exito").innerText =
+                "¡Gracias " + nombre + "! Tu formulario ha sido enviado con éxito.";
+        }
+    </script>
+		    <br><br>
+
+    <!-- Sección de contacto -->
+
+    <h2 align="center"><font color="#800000">Contáctanos</font></h2>
+
+    <table border="0" width="90%" align="center">
+        <tr>
+            <td width="50%" valign="top">
+                <h3><font color="#800000">Información de Contacto</font></h3>
+                <p> CARRERA 1A #64-04 BARRIO MIRA RÍO</p>
+
+                <p>
+                   <a href="tel:+573173171650">+57 317 317 1650</a> /
+                  <a href="tel:6088639594">608 8639594</a>
+                </p>
+
+                <p>
+                   <a href="mailto:dannasadrian@gmail.com">dannasadrian@gmail.com</a>
+                </p>
+
+                <p>
+                   Lunes a Domingo: 10:00 am - 10:30 pm
+                </p>
+
+                <p>
+                  🌐 Síguenos:  
+                  <a href="https://www.facebook.com/CrokyBroastedNeiva/" target="_blank">Facebook</a> | 
+                  <a href="https://www.instagram.com/croky_oriental?igsh=MXhkZzM2NXhvaTRt" target="_blank">Instagram</a> | 
+                  <a href="https://wa.me/573173171650" target="_blank">WhatsApp</a>
+                </p>
+            </td>
+
+            <td width="50%" valign="top">
+                <h3><font color="#800000">Ubícanos</font></h3>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.484239430617!2d-75.29831522524975!3d2.9630519542688916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b750924ccbfe9%3A0x6e29a414ce1dae1e!2sCroky%20Broasted!5e0!3m2!1ses-419!2sco!4v1759446652608!5m2!1ses-419!2sco" 
+                  width="100%" 
+                  height="300" 
+                  style="border:0;" 
+                  allowfullscreen="" 
+                  loading="lazy" 
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
