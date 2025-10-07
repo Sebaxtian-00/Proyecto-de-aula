@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Croky Broasted</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+
+    /* HEADER */
+    header { 
+      background: #ffcc00; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 10px 20px; 
+    }
+    header nav a { 
+      margin: 0 10px; 
+      text-decoration: none; 
+      color: #800000; 
+      font-weight: bold; 
+    }
+    header input { 
+      padding: 5px; 
+      border-radius: 5px; 
+      border: none; 
+    }
+
+    /* HERO */
+    .hero { 
+      background: url('https://i.imgur.com/6V68G5G.jpeg') center/cover no-repeat; 
+      color: white; 
+      text-align: center; 
+      padding: 120px 20px; 
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero h1, .hero h2, .hero button { position: relative; z-index: 1; }
+    .hero h1 { font-size: 60px; color: #ffcc00; text-shadow: 2px 2px 5px #000; }
+    .hero h2 { font-size: 30px; color: #fff; text-shadow: 2px 2px 5px #000; }
+    .hero button { 
+      margin-top: 20px; padding: 12px 25px; border: none; border-radius: 25px; 
+      background: #b30000; color: white; cursor: pointer; font-size: 16px; font-weight: bold;
+    }
+    .hero button:hover { background: #800000; }
+
+    /* ESPECIALIDADES */
+    .especialidades-section { background: #ffcc00; padding: 40px 20px; text-align: center; }
+    .especialidades-section h2 { font-size: 36px; margin-bottom: 20px; color: #800000; }
+    .especialidades { display: flex; justify-content: center; flex-wrap: wrap; }
+    .card { 
+      background: #b30000; 
+      color: white; 
+      margin: 10px; 
+      border-radius: 10px; 
+      width: 300px; 
+      text-align: center; 
+      overflow: hidden; 
+      padding-bottom: 15px; 
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: scale(1.08);
+      box-shadow: 6px 6px 20px rgba(0,0,0,0.5);
+    }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card h3 { margin: 10px 0; color: #ffcc00; }
+    .card p { font-size: 14px; padding: 0 10px; }
+    .card button { 
+      margin-top: 10px; padding: 8px 16px; border: none; border-radius: 20px; 
+      background: #ffcc00; color: #800000; cursor: pointer; font-weight: bold; transition: 0.3s;
+    }
+    .card button:hover { background: #e6b800; }
+
+    /* MODAL */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); justify-content: center; align-items: center;
+    }
+    .modal-content {
+      background: white; padding: 20px; border-radius: 10px; max-width: 400px; text-align: center;
+    }
+    .modal-content h3 { color: #800000; }
+    .modal-content ul { list-style: none; padding: 0; }
+    .modal-content li { margin: 8px 0; color: #333; }
+    .close-btn {
+      margin-top: 15px; padding: 8px 20px; background: #b30000; color: white; 
+      border: none; border-radius: 20px; cursor: pointer;
+    }
+    .close-btn:hover { background: #800000; }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div><strong style="color:#800000;font-size:20px;">Croky</strong></div>
+    <nav>
+      <a href="#">Productos</a>
+      <a href="#">Nosotros</a>
+      <a href="#">Ordenar</a>
+      <a href="#">Contactos</a>
+      <a href="#">Restaurantes</a>
+      <a href="#">Blog</a>
+    </nav>
+    <input type="text" placeholder="Buscar...">
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Croky</h1>
+    <h2>Broasted</h2>
+    <button>Ver Menú</button>
+  </section>
+
+  <!-- ESPECIALIDADES -->
+  <section class="especialidades-section">
+    <h2>Especialidades de la Casa</h2>
+    <div class="especialidades">
+      <div class="card">
+        <img src="https://i.imgur.com/lOLF1uK.jpeg">
+        <h3>Pollo Broasted</h3>
+        <p>Pollo crocante, jugoso y lleno de sabor, acompañado con papas fritas.</p>
+        <button onclick="openModal('pollo')">Más Información</button>
+      </div>
+      <div class="card">
+        <img src="https://i.imgur.com/ObRIKvM.jpeg">
+        <h3>Arroz con Todas las Carnes</h3>
+        <p>Delicioso arroz de todas las carnes:pollo, cerdo, res y mariscos, todo en un solo plato.</p>
+        <button onclick="openModal('arroz')">Más Información</button>
+      </div>
+      <div class="card">
+        <img src="https://i.imgur.com/w3gKgD7.jpeg">
+        <h3>Chop Suey</h3>
+        <p>Un mix de verduras frescas salteadas con pollo y salsa oriental.</p>
+        <button onclick="openModal('chop')">Más Información</button>
+      </div>
+	<div class="card">
+        <img src="https://i.imgur.com/rBlsB4R.jpeg">
+        <h3>Hamburguesa</h3>
+        <p>Jugosa carne a la parrilla con queso, tocineta, vegetales frescos y salsa de la casa en pan suave y platano al gusto.</p>
+        <button onclick="openModal('hamburguesa')">Más Información</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3 id="modal-title"></h3>
+      <ul id="modal-options"></ul>
+      <button class="close-btn" onclick="closeModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    function openModal(plato) {
+      const modal = document.getElementById("modal");
+      const title = document.getElementById("modal-title");
+      const options = document.getElementById("modal-options");
+
+      let content = "";
+      if (plato === "pollo") {
+        title.innerText = "Variedades de Pollo Broasted";
+        content = `
+          <li>1/4 Pollo</li>
+          <li>1/2 Pollo</li>
+          <li>Pollo Entero</li>
+          <li>Porciones Individuales</li>
+        `;
+      } else if (plato === "arroz") {
+        title.innerText = "Variedades de Arroz con Todas las Carnes";
+        content = `
+          <li>Media Caja</li>
+          <li>Caja Completa</li>
+          <li>Tipos de Arroz: Amarillo o Café</li>
+        `;
+      } else if (plato === "chop") {
+        title.innerText = "Variedades de Chop Suey";
+        content = `
+          <li>1/4 de Caja</li>
+          <li>1/2 Caja</li>
+          <li>Caja Completa</li>
+        `;
+      } else if (plato === "hamburguesa") {
+        title.innerText = "Variedades de Hamburguesas";
+        content = `
+          <li>Personal</li>
+          <li>Combos</li>
+         `;
+      }
+
+      options.innerHTML = content;
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
