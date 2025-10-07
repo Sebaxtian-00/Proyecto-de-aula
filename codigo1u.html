@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Croky Broasted</title>
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #fff; }
+    header { background: #ffcc00; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+    header nav a { margin: 0 10px; text-decoration: none; color: #800000; font-weight: bold; }
+    header input { padding: 5px; border-radius: 5px; border: none; }
+    .hero { background: url('e88225fb-e00c-4423-a7cc-fbaeebc88029.png') center/cover no-repeat; color: white; text-align: center; padding: 80px 20px; }
+    .hero h1 { font-size: 60px; color: #ffcc00; text-shadow: 2px 2px 5px #000; }
+    .hero h2 { font-size: 30px; color: #fff; text-shadow: 2px 2px 5px #000; }
+    .hero button { margin-top: 20px; padding: 10px 20px; border: none; border-radius: 20px; background: #b30000; color: white; cursor: pointer; font-size: 16px; }
+    .especialidades-section { background: #ffcc00; padding: 40px 20px; text-align: center; }
+    .especialidades-section h2 { font-size: 36px; margin-bottom: 20px; color: #800000; }
+    .especialidades { display: flex; justify-content: center; flex-wrap: wrap; }
+    .card { background: #b30000; color: white; margin: 10px; border-radius: 10px; width: 300px; text-align: center; overflow: hidden; padding-bottom: 15px; }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card h3 { margin: 10px 0; color: #ffcc00; }
+    .card p { font-size: 14px; padding: 0 10px; color: #fff; }
+    .card button { margin-top: 10px; padding: 8px 16px; border: none; border-radius: 20px; background: #ffcc00; color: #800000; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .card button:hover { background: #e6b800; }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong style="color:#800000;font-size:20px;">Croky</strong></div>
+    <nav>
+      <a href="#">Productos</a>
+      <a href="#">Nosotros</a>
+      <a href="#">Ordenar</a>
+      <a href="#">Contactos</a>
+      <a href="#">Restaurantes</a>
+      <a href="#">Blog</a>
+    </nav>
+    <input type="text" placeholder="Buscar...">
+  </header>
+
+  <section class="hero">
+    <h1>Croky</h1>
+    <h2>Broasted</h2>
+    <button>Ver Menú</button>
+  </section>
+
+  <section class="especialidades-section">
+    <h2>Especialidades de la Casa</h2>
+    <div class="especialidades">
+      <div class="card">
+        <img src="pollo.JPG">
+        <h3>Pollo Broasted</h3>
+        <p>Pollo crocante, jugoso y lleno de sabor, acompañado con papas fritas.</p>
+        <button>Más Información</button>
+      </div>
+      <div class="card">
+        <img src="arroz.JPG">
+        <h3>Arroz con Todas las Carnes</h3>
+        <p>Delicioso arroz frito con pollo, cerdo, res y mariscos, todo en un solo plato.</p>
+        <button>Más Información</button>
+      </div>
+      <div class="card">
+        <img src="chopsue.JPG">
+        <h3>Chop Suey</h3>
+        <p>Un mix de verduras frescas salteadas con pollo y salsa oriental.</p>
+        <button>Más Información</button>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
