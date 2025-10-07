@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #800000; 
-            --primary-dark: #b30000; 
+            --primary: #751c1c; 
+            --primary-dark: #921f1f; 
             --secondary: #ffcc00; 
             --secondary-dark: #e6b800; 
-            --light: #f5f5f5;
+            --light: #ffffff;
             --dark: #333;
-            --gray: #dbd4d4;
-            --white: #fff;
+            --gray: #ffffff;
+            --white: #ffffff;
         }
         
         * {
@@ -96,7 +96,7 @@
         
         /* HERO SECTION */
         .hero {
-            background: linear-gradient(rgba(128, 0, 0, 0.8), rgba(179, 0, 0, 0.8)), 
+            background: linear-gradient(rgba(128, 0, 0, 0.485), rgba(135, 13, 13, 0.518)), 
                         url('https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
@@ -108,7 +108,7 @@
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.833);
         }
         
         .hero p {
@@ -369,7 +369,7 @@
         
         .menu-content p {
             margin-bottom: 15px;
-            color: #666;
+            color: #3c3c3c;
         }
         
         .price {
@@ -1407,7 +1407,7 @@
 
     p:nth-child(2)::before { content: "📍"; }
     p:nth-child(3)::before { content: "📞"; }
-    p:nth-child(4)::before { content: "✉️"; }
+    p:nth-child(4)::before { content: "✉"; }
     p:nth-child(5)::before { content: "🕓"; }
 
     /* Animación suave al pasar sobre cada párrafo */
