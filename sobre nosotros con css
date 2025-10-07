@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croky - Pollo Broaster & Arroz Chino</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #800000; 
+            --primary-dark: #b30000; 
+            --secondary: #ffcc00; 
+            --secondary-dark: #e6b800; 
+            --light: #f5f5f5;
+            --dark: #333;
+            --gray: #dbd4d4;
+            --white: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* HEADER */
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--secondary);
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(rgba(128, 0, 0, 0.8), rgba(179, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+        
+        /* ABOUT SECTION */
+        .about {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* FEATURES SECTION */
+        .features {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(128, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* TESTIMONIALS */
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .testimonial-text::before {
+            content: '"';
+            font-size: 60px;
+            color: var(--gray);
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            opacity: 0.3;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* MENU SECTION */
+        .menu {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .menu-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(128, 0, 0, 0.1);
+        }
+        
+        .menu-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .menu-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .menu-card:hover .menu-img img {
+            transform: scale(1.1);
+        }
+        
+        .menu-content {
+            padding: 20px;
+        }
+        
+        .menu-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .menu-content p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        /* FOOTER */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-column p, .footer-column a {
+            color: #e6e6e6;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+        
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="logo-text">CROKY <span>RESTAURANT</span></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#menu">Menú</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>El Mejor Pollo Broaster & Arroz Chino</h1>
+            <p>Desde 1995, ofreciendo los sabores más auténticos con ingredientes frescos y técnicas tradicionales</p>
+            <a href="#menu" class="btn btn-secondary">Ver Nuestro Menú</a>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sobre Nosotros</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Nuestra Historia</h3>
+                    <p>Desde 1995, Croky se ha consolidado como el referente indiscutible en pollo broaster y arroz chino en la ciudad. Nuestra pasión por la buena comida y un servicio de calidad nos ha permitido crecer y mantenernos como el favorito de las familias.</p>
+                    <p>Utilizamos únicamente ingredientes frescos y técnicas de preparación que respetan las tradiciones culinarias, lo que garantiza un sabor auténtico y delicioso en cada plato que servimos.</p>
+                    <p>En Croky, no solo servimos comida; creamos experiencias gastronómicas que perduran en la memoria de nuestros clientes.</p>
+                    <a href="#contacto" class="btn">Contáctanos</a>
+                </div>
+               <div class="about-img">
+    <img src="croky.png" alt="Interior del restaurante Croky">
+</div>
+
+        
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Por Qué Elegirnos?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3>Más de 25 Años de Experiencia</h3>
+                    <p>Desde 1995, perfeccionando nuestras recetas y técnicas para ofrecerte lo mejor.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Ingredientes Frescos</h3>
+                    <p>Utilizamos solo ingredientes de la más alta calidad en cada uno de nuestros platos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Preparado con Pasión</h3>
+                    <p>Cada plato es preparado con dedicación y amor por la cocina tradicional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reseñas Croky</title>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #fff9f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        text-align: center;
+        color: red;
+        margin-top: 40px;
+        font-size: 2.5em;
+        letter-spacing: 2px;
+        animation: aparecer 1.5s ease-in-out;
+    }
+
+    @keyframes aparecer {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .lineas {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .lineas hr {
+        border: none;
+        height: 5px;
+        margin: 5px auto;
+    }
+
+    .lineas .negra { width: 200px; background-color: black; }
+    .lineas .amarilla { width: 180px; background-color: yellow; }
+
+    .reseñas {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .caja {
+        background-color: #f3f3f3;
+        border-radius: 20px;
+        padding: 25px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: transform 0.4s, box-shadow 0.4s;
+        animation: subir 1s ease-in-out;
+    }
+
+    .caja:hover {
+        transform: scale(1.07);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    @keyframes subir {
+        from {opacity: 0; transform: translateY(40px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .comilla {
+        font-size: 30px;
+        color: orange;
+    }
+
+    p {
+        text-align: justify;
+        font-size: 15px;
+    }
+
+    .estrellas {
+        font-size: 22px;
+        color: gold;
+        margin: 10px 0;
+    }
+
+    .perfil {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #ff9900;
+        object-fit: cover;
+        margin-top: 10px;
+    }
+
+    .nombre {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #555;
+    }
+</style>
+</head>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reseñas de clientes sobre Croky Broaster - Pollo broaster de calidad">
+    <title>Reseñas Croky Broaster</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #e30613;
+            --secondary-color: #ffcc00;
+            --dark-color: #1a1a1a;
+            --light-color: #fff9f0;
+            --gray-color: #f3f3f3;
+            --text-color: #333333;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+            animation: aparecer 1s ease-out;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        @keyframes aparecer {
+            from { 
+                opacity: 0; 
+                transform: translateY(-30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .lineas {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .lineas hr {
+            border: none;
+            height: 5px;
+            margin: 8px auto;
+            border-radius: 5px;
+        }
+
+        .lineas .negra { 
+            width: 200px; 
+            background-color: var(--dark-color); 
+        }
+        .lineas .amarilla { 
+            width: 180px; 
+            background-color: var(--secondary-color); 
+        }
+
+        .reseñas-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 20px 0 60px;
+        }
+
+        .reseña-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: subir 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .reseña-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        .reseña-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        .reseña-card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .reseña-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .reseña-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        @keyframes subir {
+            from { 
+                opacity: 0; 
+                transform: translateY(40px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .comilla {
+            font-size: 50px;
+            color: var(--secondary-color);
+            line-height: 1;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .reseña-texto {
+            text-align: justify;
+            font-size: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .estrellas {
+            font-size: 22px;
+            color: var(--secondary-color);
+            margin: 15px 0;
+            letter-spacing: 3px;
+        }
+
+        .perfil-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .perfil-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary-color);
+            margin-right: 15px;
+        }
+
+        .perfil-info {
+            text-align: left;
+        }
+
+        .nombre {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--dark-color);
+        }
+
+        .cliente-frecuente {
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 20px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .reseñas-container {
+                gap: 25px;
+            }
+            
+            .reseña-card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .reseña-card {
+                padding: 25px 20px;
+            }
+            
+            .perfil-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .perfil-img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .perfil-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñas Croky Broaster</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e30613;
+            --secondary: #ffcc00;
+            --dark: #1a1a1a;
+            --light: #fff9f0;
+            --gray: #f5f5f5;
+            --text: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 0 30px;
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin: 25px 0 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .reviews-section {
+            padding: 40px 0 80px;
+        }
+        
+        .reviews-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .review-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .quote-icon {
+            font-size: 24px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .review-text {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .rating {
+            margin: 20px 0;
+            color: var(--secondary);
+            font-size: 18px;
+        }
+        
+        .reviewer {
+            display: flex;
+            align-items: center;
+            margin-top: 25px;
+        }
+        
+        .reviewer-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+            margin-right: 15px;
+        }
+        
+        .reviewer-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--dark);
+        }
+        
+        .reviewer-detail {
+            font-size: 14px;
+            color: var(--primary);
+            margin-top: 3px;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            background: #c10510;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(227, 6, 19, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: rgb(16, 6, 6);
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .reviews-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-card {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .reviewer {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .reviewer-img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reseñas Croky</title>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #fff9f0;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
+        text-align: center;
+        color: red;
+        margin-top: 40px;
+        font-size: 2.5em;
+        letter-spacing: 2px;
+        animation: aparecer 1.5s ease-in-out;
+    }
+
+    @keyframes aparecer {
+        from {opacity: 0; transform: translateY(-20px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .lineas {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .lineas hr {
+        border: none;
+        height: 5px;
+        margin: 5px auto;
+    }
+
+    .lineas .negra { width: 200px; background-color: black; }
+    .lineas .amarilla { width: 180px; background-color: yellow; }
+
+    .reseñas {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .caja {
+        background-color: #f3f3f3;
+        border-radius: 20px;
+        padding: 25px;
+        width: 300px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: transform 0.4s, box-shadow 0.4s;
+        animation: subir 1s ease-in-out;
+    }
+
+    .caja:hover {
+        transform: scale(1.07);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    @keyframes subir {
+        from {opacity: 0; transform: translateY(40px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .comilla {
+        font-size: 30px;
+        color: orange;
+    }
+
+    p {
+        text-align: justify;
+        font-size: 15px;
+    }
+
+    .estrellas {
+        font-size: 22px;
+        color: gold;
+        margin: 10px 0;
+    }
+
+    .perfil {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid #ff9900;
+        object-fit: cover;
+        margin-top: 10px;
+    }
+
+    .nombre {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #eee8e8;
+    }
+</style>
+</head>
+
+<body>
+
+    <h2>RESEÑAS</h2>
+    <div class="lineas">
+        <hr class="negra">
+        <hr class="amarilla">
+        <hr class="negra">
+    </div>
+
+    <div class="reseñas">
+        <div class="caja">
+            <div class="comilla">”</div>
+            <p>¡Una tradición familiar! Llevamos viniendo a Croky desde que mis hijos eran pequeños y ahora los traemos a sus hijos. El pollo broaster es perfecto: crujiente por fuera, jugoso por dentro y con ese sabor inigualable. El arroz chino es el mejor de la ciudad. Un clásico que nunca defrauda.</p>
+            <div class="estrellas">⭐⭐⭐⭐⭐</div>
+            <img src="sofia.jpg" class="perfil" alt="Sofía">
+            <div class="nombre">Sofía Figueroa</div>
+        </div>
+
+        <div class="caja">
+            <div class="comilla">”</div>
+            <p>¡Más que comida, es una experiencia! Celebré mi cumpleaños aquí y el trato fue excepcional. La comida es deliciosa (recomiendo totalmente las alitas). Lo que más me gusta es el ambiente acogedor y familiar. ¡Volveremos pronto!</p>
+            <div class="estrellas">⭐⭐⭐⭐⭐</div>
+            <img src="laura.jpg" class="perfil" alt="Laura">
+            <div class="nombre">Laura Hernandez</div>
+        </div>
+
+        <div class="caja">
+            <div class="comilla">”</div>
+            <p>Auténtico y consistente. Después de años de vivir en la ciudad, Croky sigue siendo mi referencia para un pollo broaster de calidad. Siempre fresco, siempre sabroso. El único ‘problema’ es que siempre quiero repetir.</p>
+            <div class="estrellas">⭐⭐⭐⭐⭐</div>
+            <img src="joseph.jpg" class="perfil" alt="Joseph">
+            <div class="nombre">Joseph Alvarez</div>
+        </div>
+    </div>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contáctanos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 40px;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #ffffff;
+      font-size: 2em;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background-color: #ffcc00;
+      margin-top: 5px;
+      border-radius: 2px;
+    }
+
+    h3 {
+      color: #ffcc00;
+      margin-top: 30px;
+      font-size: 1.3em;
+    }
+
+    p, a {
+      font-size: 1em;
+      line-height: 1.8;
+      transition: all 0.3s ease;
+    }
+
+    a {
+      color: #ffcc00;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #ffe680;
+      text-shadow: 0 0 8px #ffcc00;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    td {
+      vertical-align: top;
+      padding: 20px;
+    }
+
+    /* Animación mapa */
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+      background-color: #d3d3d3;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    iframe:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 20px rgba(255, 204, 0, 0.4);
+    }
+
+    /* Íconos o emojis */
+    p::before {
+      margin-right: 8px;
+    }
+
+    p:nth-child(2)::before { content: "📍"; }
+    p:nth-child(3)::before { content: "📞"; }
+    p:nth-child(4)::before { content: "✉️"; }
+    p:nth-child(5)::before { content: "🕓"; }
+
+    /* Animación suave al pasar sobre cada párrafo */
+    td p:hover {
+      color: #fff;
+      text-shadow: 0 0 10px #ffcc00;
+      transform: scale(1.02);
+    }
+
+    /* Redes sociales */
+    .social a {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 1.2em;
+      transition: all 0.3s ease;
+    }
+
+    .social a:hover {
+      color: #ffe680;
+      text-shadow: 0 0 10px #ffcc00;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      table {
+        display: block;
+      }
+      td {
+        display: block;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Contáctanos</h2>
+
+  <table>
+    <tr>
+      <td width="50%">
+        <h3>Información de Contacto</h3>
+        <p>CARRERA 1A #64-04 BARRIO MIRA RÍO</p>
+        <p><a href="tel:+573173171650">+57 317 317 1650</a> / <a href="tel:6088639594">608 8639594</a></p>
+        <p><a href="mailto:dannasadrian@gmail.com">dannasadrian@gmail.com</a></p>
+        <p>Lunes a Domingo: 10:00 am - 10:30 pm</p>
+        <div class="social">
+          <a href="https://www.facebook.com/CrokyBroastedNeiva/" target="_blank">🌐 Facebook</a>
+          <a href="https://www.instagram.com/croky_oriental?igsh=MXhkZzM2NXhvaTRt" target="_blank">📸 Instagram</a>
+          <a href="https://wa.me/573173171650" target="_blank">💬 WhatsApp</a>
+        </div>
+      </td>
+
+      <td width="50%">
+        <h3 style="color: #ffffff;">Ubícanos</h3>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.484239430617!2d-75.29831522524975!3d2.9630519542688916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b750924ccbfe9%3A0x6e29a414ce1dae1e!2sCroky%20Broasted!5e0!3m2!1ses-419!2sco!4v1759446652608!5m2!1ses-419!2sco" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
