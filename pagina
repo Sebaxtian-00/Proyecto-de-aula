@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Croky</title>
+  <title>Croky - Restaurante</title>
   <style>
     * {
       margin: 0;
@@ -13,7 +13,7 @@
     }
 
     body {
-      background-color: #ffcc00; /* Fondo amarillo para toda la página */
+      background-color: #ffcc00;
       color: #333;
       overflow-x: hidden;
     }
@@ -25,7 +25,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 30px;
+      padding: 15px 30px;
       position: relative;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
@@ -42,8 +42,14 @@
       font-size: 32px;
       font-weight: bold;
     }
-    .logo span {
-      margin-left: 8px;
+    
+    .logo-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffcc00;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     /* Menú horizontal */
@@ -51,6 +57,7 @@
       display: flex;
       justify-content: center;
       gap: 6px;
+      align-items: center;
     }
 
     .main-nav a {
@@ -67,7 +74,30 @@
       background-color: rgba(255,255,255,0.1);
     }
 
-    /* Botón hamburguesa - solo visible en móviles */
+    /* Carrito de compras */
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ffcc00;
+      color: #800000;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* Botón hamburguesa */
     .menu-btn {
       display: none;
       flex-direction: column;
@@ -94,7 +124,7 @@
       transform: rotate(-45deg) translate(6px, -6px);
     }
 
-    /* Menú lateral - solo para móviles */
+    /* Menú lateral */
     .side-menu {
       position: fixed;
       top: 0;
@@ -145,33 +175,288 @@
       opacity: 1;
       visibility: visible;
     }
-    
 
-    /* ===== HERO SECTION ===== */
+    /* ===== PANEL DE PEDIDOS ===== */
+    .pedido-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 380px;
+      height: 100vh;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+      transition: right 0.3s ease;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pedido-panel.show {
+      right: 0;
+    }
+
+    .pedido-header {
+      background: #800000;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pedido-header h3 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .close-pedido {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .pedido-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    #lista-pedido {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    #lista-pedido li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .cantidad-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .cantidad-control button {
+      background: #800000;
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cantidad-control button:hover {
+      background: #600000;
+    }
+
+    .cantidad-control span {
+      font-weight: bold;
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .pedido-footer {
+      padding: 20px;
+      border-top: 2px solid #800000;
+      background: #f9f9f9;
+    }
+
+    .total-pedido {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #800000;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .btn-pedido {
+      background: #ffcc00;
+      color: #800000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1.1rem;
+      transition: 0.3s;
+    }
+
+    .btn-pedido:hover {
+      background: #e6b800;
+      transform: translateY(-2px);
+    }
+
+    /* Botón agregar al carrito en productos */
+    .btn-agregar {
+      background: #800000;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-agregar:hover {
+      background: #600000;
+      transform: translateY(-2px);
+    }
+
+    /* ===== MODAL DE INFORMACIÓN DEL CLIENTE ===== */
+    .modal-cliente {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 1200;
+    }
+
+    .modal-cliente-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+
+    .modal-cliente h3 {
+      color: #800000;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #800000;
+      outline: none;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 25px;
+    }
+
+    .btn-cancelar {
+      background: #ccc;
+      color: #333;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-confirmar {
+      background: #800000;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-cancelar:hover {
+      background: #bbb;
+    }
+
+    .btn-confirmar:hover {
+      background: #600000;
+    }
+
+    /* ===== EFECTO MÁQUINA DE ESCRIBIR ===== */
+    .typewriter-container {
+      display: inline-block;
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+    
+    .typewriter-text {
+      font-size: 18px;
+      overflow: hidden;
+      border-right: 2px solid #ffcc00;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: 0.5px;
+      animation: typing 3.5s steps(60, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #ffcc00 }
+    }
+
+    /* Resto de tus estilos existentes... */
     .hero-secondary { 
-      
       color: white; 
       text-align: center; 
       padding: 200px 140px; 
       position: relative;
     }
     video { 
- 
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
- 
-  position: fixed;    
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%); 
- 
-  z-index: -100;
- 
-  background-size: cover;
- 
-}
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      position: fixed;    
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%); 
+      z-index: -100;
+      background-size: cover;
+    }
     .hero-secondary::after {
       content: "";
       position: absolute;
@@ -211,9 +496,8 @@
       transform: translateY(-3px);
     }
 
-    /* ===== ESPECIALIDADES ===== */
     .especialidades-section { 
-      background: #ffcc00; /* Fondo amarillo */
+      background: #ffcc00;
       padding: 60px 20px; 
       text-align: center; 
     }
@@ -273,7 +557,6 @@
       background: #e6b800; 
     }
 
-    /* ===== MODAL ===== */
     .modal {
       display: none; 
       position: fixed; 
@@ -325,17 +608,15 @@
       background: #800000; 
     }
 
-    /* ===== SEPARADORES ===== */
     .section-divider {
       height: 4px;
       background: linear-gradient(90deg, #800000, #ffcc00, #800000);
       margin: 0;
     }
 
-    /* ===== SOBRE NOSOTROS ===== */
     .about {
       padding: 80px 20px;
-      background-color: #ffcc00; /* Fondo amarillo */
+      background-color: #ffcc00;
     }
     
     .container {
@@ -361,7 +642,7 @@
       position: absolute;
       width: 80px;
       height: 3px;
-      background-color: #800000; /* Color del menú */
+      background-color: #800000;
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
@@ -409,7 +690,7 @@
     
     .btn {
       display: inline-block;
-      background-color: #800000; /* Color del menú */
+      background-color: #800000;
       color: white;
       padding: 12px 30px;
       border-radius: 30px;
@@ -427,10 +708,9 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    /* ===== FEATURES SECTION ===== */
     .features {
       padding: 80px 20px;
-      background-color: #ffcc00; /* Fondo amarillo */
+      background-color: #ffcc00;
     }
     
     .features-grid {
@@ -446,7 +726,7 @@
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
       transition: transform 0.3s ease;
-      border-top: 4px solid #800000; /* Color del menú */
+      border-top: 4px solid #800000;
     }
     
     .feature-card:hover {
@@ -456,7 +736,7 @@
     
     .feature-icon {
       font-size: 40px;
-      color: #800000; /* Color del menú */
+      color: #800000;
       margin-bottom: 20px;
     }
     
@@ -471,15 +751,14 @@
       line-height: 1.6;
     }
 
-    /* ===== RESEÑAS ===== */
     .reseñas-section {
       padding: 80px 20px;
-      background-color: #ffcc00; /* Fondo amarillo */
+      background-color: #ffcc00;
       text-align: center;
     }
     
     .reseñas-section h2 {
-      color: #800000; /* Color del menú */
+      color: #800000;
       font-size: 36px;
       margin-bottom: 15px;
     }
@@ -495,7 +774,7 @@
       margin: 5px auto;
     }
     
-    .lineas .negra { width: 200px; background-color: #800000; } /* Color del menú */
+    .lineas .negra { width: 200px; background-color: #800000; }
     .lineas .amarilla { width: 180px; background-color: #ffcc00; }
     
     .reseñas {
@@ -522,7 +801,7 @@
     
     .comilla {
       font-size: 40px;
-      color: #800000; /* Color del menú */
+      color: #800000;
       line-height: 1;
       margin-bottom: 15px;
     }
@@ -545,7 +824,7 @@
       height: 70px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #b30000; /* Color del menú */
+      border: 3px solid #b30000;
       margin: 10px 0;
     }
     
@@ -556,9 +835,8 @@
       color: #333;
     }
 
-    /* ===== MENÚ SECTION ===== */
     .menu-section {
-      background: #ffcc00; /* Fondo amarillo */
+      background: #ffcc00;
       padding: 60px 20px;
       text-align: center;
     }
@@ -566,7 +844,7 @@
     .menu-section h2 {
       font-size: 36px;
       margin-bottom: 40px;
-      color: #800000; /* Color del menú */
+      color: #800000;
     }
     
     .menu-container {
@@ -590,7 +868,7 @@
     }
     
     .menu-title {
-      background: #800000; /* Color del menú */
+      background: #800000;
       color: #fff;
       font-size: 2rem;
       font-weight: 900;
@@ -614,7 +892,7 @@
     
     .accordion-header {
       width: 100%;
-      background: #800000; /* Color del menú */
+      background: #800000;
       color: #ffe600;
       font-size: 1.3rem;
       font-weight: 900;
@@ -689,7 +967,7 @@
     }
     
     .product-info h3 {
-      color: #800000; /* Color del menú */
+      color: #800000;
       font-size: 1.1rem;
       font-weight: 900;
       margin: 0 0 0.2rem 0;
@@ -702,7 +980,7 @@
     }
     
     .price { 
-      color: #b30000; /* Color del menú */
+      color: #b30000;
       font-weight: 900; 
       font-size: 1.1rem; 
       letter-spacing: 1px; 
@@ -712,7 +990,7 @@
       background: #fff;
       border-radius: 0 0 16px 16px;
       text-align: center;
-      color: #800000; /* Color del menú */
+      color: #800000;
       font-size: 1.1rem;
       font-weight: 700;
       margin: 1.5rem 1rem 0 1rem;
@@ -720,10 +998,9 @@
       box-shadow: 0 2px 8px rgba(229, 115, 115, 0.2);
     }
 
-    /* ===== CONTACTO ===== */
     .contacto-section {
       padding: 80px 20px;
-      background-color: #1f1f1f; /* Fondo original sin cambios */
+      background-color: #1f1f1f;
       color: #e0e0e0;
     }
     
@@ -816,6 +1093,10 @@
       .contacto-content {
         flex-direction: column;
       }
+      
+      .pedido-panel {
+        width: 350px;
+      }
     }
 
     @media (max-width: 768px) {
@@ -853,6 +1134,19 @@
       .footer {
         font-size: 0.95rem;
       }
+      
+      .pedido-panel {
+        width: 100%;
+        right: -100%;
+      }
+      
+      /* Ajustes para el efecto de máquina de escribir en móviles */
+      .typewriter-text {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+        width: 100%;
+      }
     }
 
     @media (max-width: 480px) {
@@ -860,8 +1154,9 @@
         padding: 15px 20px;
       }
       
-      .logo {
-        font-size: 24px;
+      .logo-img {
+        width: 50px;
+        height: 50px;
       }
       
       .hero-secondary {
@@ -895,12 +1190,10 @@
 
   <!-- HEADER PRINCIPAL -->
   <header class="main-header">
-    <!-- Contenedor logo + botón -->
     <div class="brand">
       <div class="logo" aria-label="Logo CROKY">
-       <span> <img src="https://imgur.com/7h6sIui.png" alt="" height="50px" width="60px"> </span>
+        <img src="https://imgur.com/7h6sIui.png" alt="Logo Croky" class="logo-img">
       </div>
-      <!-- Botón hamburguesa - solo visible en móviles -->
       <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">
         <div></div>
         <div></div>
@@ -908,15 +1201,68 @@
       </button>
     </div>
 
-    <!-- Menú normal centrado -->
     <nav class="main-nav">
       <a href="#especialidades">ESPECIALIDADES</a>
       <a href="#menu">MENÚ</a>
       <a href="#nosotros">SOBRE NOSOTROS</a>
       <a href="#reseñas">RESEÑAS</a>
       <a href="#contacto">CONTACTO</a>
+      <div class="cart-icon" onclick="togglePedidoPanel()">
+        🛒
+        <div class="cart-count" id="cartCount">0</div>
+      </div>
     </nav>
   </header>
+
+  <!-- PANEL DE PEDIDOS -->
+  <div class="pedido-panel" id="pedidoPanel">
+    <div class="pedido-header">
+      <h3>Tu Pedido</h3>
+      <button class="close-pedido" onclick="togglePedidoPanel()">×</button>
+    </div>
+    <div class="pedido-content">
+      <ul id="lista-pedido"></ul>
+    </div>
+    <div class="pedido-footer">
+      <div class="total-pedido" id="totalTexto">Total: $0</div>
+      <button class="btn-pedido" onclick="solicitarInformacionCliente()">Realizar Pedido</button>
+    </div>
+  </div>
+
+  <!-- MODAL DE INFORMACIÓN DEL CLIENTE -->
+  <div class="modal-cliente" id="modalCliente">
+    <div class="modal-cliente-content">
+      <h3>Información del Pedido</h3>
+      <form id="formCliente">
+        <div class="form-group">
+          <label for="nombre">Nombre de quien recibe:</label>
+          <input type="text" id="nombre" name="nombre" required placeholder="Ingresa tu nombre completo">
+        </div>
+        <div class="form-group">
+          <label for="direccion">Dirección de entrega:</label>
+          <input type="text" id="direccion" name="direccion" required placeholder="Ingresa tu dirección completa">
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono de contacto:</label>
+          <input type="tel" id="telefono" name="telefono" required placeholder="Ingresa tu número de teléfono">
+        </div>
+        <div class="form-group">
+          <label for="pago">Tipo de pago:</label>
+          <select id="pago" name="pago" required>
+            <option value="">Selecciona método de pago</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Transferencia">Transferencia</option>
+            <option value="Nequi">Nequi</option>
+            <option value="Daviplata">Daviplata</option>
+          </select>
+        </div>
+        <div class="form-buttons">
+          <button type="button" class="btn-cancelar" onclick="cerrarModalCliente()">Cancelar</button>
+          <button type="button" class="btn-confirmar" onclick="enviarPedidoWhatsApp()">Enviar Pedido</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- Menú lateral para móviles -->
   <div class="side-menu" id="sideMenu">
@@ -935,12 +1281,17 @@
   <!-- HERO SECUNDARIO -->
   <section class="hero-secondary">
     <video autoplay loop muted id="video">
-  <source src="https://imgur.com/yNOCtia.mp4" type="video/mp4"></source>
-    <source src="https://imgur.com/yNOCtia.ogg" type="video/ogg"></source>
-
-</video>
+      <source src="https://imgur.com/yNOCtia.mp4" type="video/mp4">
+      <source src="https://imgur.com/yNOCtia.ogg" type="video/ogg">
+    </video>
     <h1>El Mejor Pollo Broaster & Arroz Chino</h1>
-    <p>Desde 1995, ofreciendo los sabores más auténticos con ingredientes frescos y técnicas tradicionales</p>
+    <div class="typewriter-container">
+      <p class="typewriter-text">Desde 1995, ofreciendo los sabores más auténticos de la ciudad..</p>
+    </div>
+    <br>
+    <br>
+    <br>
+
     <a href="#menu" class="btn">VER MENU</a>
   </section>
 
@@ -950,27 +1301,27 @@
     <div class="especialidades">
       <div class="card">
         <img src="https://i.imgur.com/lOLF1uK.jpeg" alt="Pollo Broasted">
-        <h3>Pollo Broasted</h3>
+        <h3>Pollo Broasted entero</h3>
         <p>Pollo crocante, jugoso y lleno de sabor, acompañado con papas fritas.</p>
-        <button onclick="openModal('pollo')">Más Información</button>
+        <button class="btn-agregar" onclick="agregarAlPedido('Pollo Broasted', 30000)">Agregar al Pedido</button>
       </div>
       <div class="card">
         <img src="https://i.imgur.com/ObRIKvM.jpeg" alt="Arroz con Todas las Carnes">
-        <h3>Arroz oriental</h3>
+        <h3>Arroz chino</h3>
         <p>Delicioso arroz de todas las carnes: pollo, cerdo, res y mariscos, todo en un solo plato.</p>
-        <button onclick="openModal('arroz')">Más Información</button>
+        <button class="btn-agregar" onclick="agregarAlPedido('Arroz Oriental', 15000)">Agregar al Pedido</button>
       </div>
       <div class="card">
         <img src="https://i.imgur.com/w3gKgD7.jpeg" alt="Chop Suey">
-        <h3>Chop Suey</h3>
+        <h3> 1/4 Chop Suey</h3>
         <p>Un mix de verduras frescas salteadas con pollo y salsa oriental.</p>
-        <button onclick="openModal('chop')">Más Información</button>
+        <button class="btn-agregar" onclick="agregarAlPedido('Chop Suey', 27000)">Agregar al Pedido</button>
       </div>
       <div class="card">
         <img src="https://i.imgur.com/rBlsB4R.jpeg" alt="Hamburguesa">
-        <h3>Hamburguesa</h3>
-        <p>Jugosa carne a la parrilla con queso, tocineta, vegetales frescos y salsa de la casa en pan suave y plátano al gusto.</p>
-        <button onclick="openModal('hamburguesa')">Más Información</button>
+        <h3>Hamburguesa especial </h3>
+        <p>Jugosa carne a la parrilla con queso, tocineta, vegetales frescos y salsa de la casa.</p>
+        <button class="btn-agregar" onclick="agregarAlPedido('Hamburguesa', 13000)">Agregar al Pedido</button>
       </div>
     </div>
   </section>
@@ -983,94 +1334,488 @@
       <button class="close-btn" onclick="closeModal()">Cerrar</button>
     </div>
   </div>
-<br> 
-<br> 
-<br> 
-<br> 
-<br> 
-<br> 
- <main class="menu-container">
+
+  <br><br><br><br><br><br>
+
+  <main class="menu-container">
     <section class="menu-card">
       <h2 class="menu-title" id="menu">👨‍🍳 MENÚ CROKY</h2>
 
       <div class="accordion">
+        <!-- COMBOS -->
+        <div class="accordion-item">
+          <button class="accordion-header" data-target="#combos">
+            <span>🍱 COMBOS 🍱</span><span class="arrow">▼</span>
+          </button>
+          <div class="accordion-body" id="combos">
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Combo Familiar</h3>
+                <p>8 presas de pollo Broasted + Papá francesa + Ensalada + Maduro + Arepa + Gaseosa Econolitro</p>
+                <span class="price">$44.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Combo Familiar', 44000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/JUn13R3.jpg" alt="Combo Familiar">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Combo Junior</h3>
+                <p>2 presas + Papá francesa, ensalada, maduro y gaseosa pet 250</p>
+                <span class="price">$14.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Combo Junior', 14000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/uziUsEJ.jpg" alt="Combo Junior">
+            </div>
+          </div>
+        </div>
+
+        <!-- COMIDAS RÁPIDAS -->
+        <div class="accordion-item">
+          <button class="accordion-header" data-target="#rapidas">
+            <span>🍔 COMIDAS RÁPIDAS 🍔</span><span class="arrow">▼</span>
+          </button>
+          <div class="accordion-body" id="rapidas">
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Hamburguesa Sencilla</h3>
+                <p>Pan o patacón, carne de res, queso, tomate, cebolla grille, lechuga y salsa</p>
+                <span class="price">$10.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Hamburguesa Sencilla', 10000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/rBlsB4R.jpeg" alt="Hamburguesa Sencilla">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Hamburguesa Especial</h3>
+                <p>Pan o patacón, carne res, queso, tomate, cebolla grille, lechuga, maíz tierno, riplo, papa a la francesa y salsas</p>
+                <span class="price">$13.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Hamburguesa Especial', 13000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/rBlsB4R.jpeg" alt="Hamburguesa Especial">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Hamburguesa de Pollo</h3>
+                <p>Milanesa de pollo apanado, queso, lechuga, tomate, cerdo, grille, riplo maíz tierno, papa a la francesa y salsas</p>
+                <span class="price">$13.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Hamburguesa de Pollo', 13000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/rBlsB4R.jpeg" alt="Hamburguesa de Pollo">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Croky Burger</h3>
+                <p>Carne res, cerdo, pechuga, chorizo, queso, tomate, cebolla grille, lechuga, maíz tierno, riplo, papa a la francesa y salsas</p>
+                <span class="price">$20.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Croky Burger', 20000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/rBlsB4R.jpeg" alt="Croky Burger">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Perro Caliente</h3>
+                <p>Pan de perro, salchicha tipo americana, queso, riplo y salsas</p>
+                <span class="price">$10.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Perro Caliente', 10000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/GHGKu7i.jpg" alt="Perro Caliente">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Mazorcada Doble</h3>
+                <p>Para 2 personas</p>
+                <span class="price">$30.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Mazorcada Doble', 30000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/k6lacY1.jpg" alt="Mazorcada Doble">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Mazorcada Personal</h3>
+                <p>Pechuga, cerdo, chorizo, maíz tierno, doble queso, salsas especiales, base de papa a la francesa y maduro picado</p>
+                <span class="price">$15.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Mazorcada Personal', 15000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/k6lacY1.jpg" alt="Mazorcada Personal">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Salchipapa</h3>
+                <p>Papa a la francesa, salchicha tipo americana, queso, riplo y salsas</p>
+                <span class="price">$10.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Salchipapa', 10000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/z4oNurw.jpg" alt="Salchipapa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Picada Doble</h3>
+                <p>Carne res, cerdo, pechuga, chorizo, queso, cebolla grille, maíz tierno, riplo, salsas, base de papa a la francesa y maduro</p>
+                <span class="price">$30.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Picada Doble', 30000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/YRw1yJ9.jpg" alt="Picada Doble">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Picada Personal</h3>
+                <p>Cerdo, pechuga, chorizo, maíz tierno, cebolla grille, riplo, queso, base de papa a la francesa, maduro picado</p>
+                <span class="price">$20.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Picada Personal', 20000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/YRw1yJ9.jpg" alt="Picada Personal">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Mega Picada 4 Personas</h3>
+                <p>Carne res, cerdo, pechuga, chorizo, queso, cebolla grille, maíz tierno, riplo, salsas, base de papa a la francesa y maduro</p>
+                <span class="price">$45.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Mega Picada 4 Personas', 45000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/YRw1yJ9.jpg" alt="Mega Picada">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Patacón Mixto</h3>
+                <p>Base de patacón verde o maduro, pechuga, cerdo, chorizo, cebolla grille, maíz tierno, queso, riplo y salsas</p>
+                <span class="price">$17.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Patacón Mixto', 17000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/iLXhgKn.jpg" alt="Patacón Mixto">
+            </div>
+          </div>
+        </div>
+
         <!-- Platos principales -->
         <div class="accordion-item">
           <button class="accordion-header" data-target="#platos">
             <span>🍗 PLATOS PRINCIPALES 🍗</span><span class="arrow">▼</span>
           </button>
           <div class="accordion-body" id="platos">
-            <div class="product-card"><div class="product-info"><h3>Pollo asado entero</h3><p>Pollo entero + papa salada + ensalada + maduro + ají</p><span class="price">$30.000</span></div><img src="https://imgur.com/BM44BT8.jpg" alt="Pollo asado entero"></div>
-            <div class="product-card"><div class="product-info"><h3>1/2 Pollo a la Brasa</h3><p>4 presas de pollo asado + papa salada + ensalada + maduro + ají</p><span class="price">$19.000</span></div><img src="https://imgur.com/9lSb6r2.jpg" alt="1/2 Pollo a la Brasa"></div>
-            <div class="product-card"><div class="product-info"><h3>1/4 Pollo a la Brasa</h3><p>2 presas de pollo asado + papa salada + ensalada + maduro + ají</p><span class="price">$10.000</span></div><img src="https://imgur.com/AL2a2SZ.jpg" alt="1/4 Pollo a la Brasa"></div>
-            <div class="product-card"><div class="product-info"><h3>Pollo entero Broaster</h3><p>8 presas de pollo broasted crujiente + papas a la francesa + arepas + maduro + ensalada</p><span class="price">$38.000</span></div><img src="https://imgur.com/JUn13R3.jpg" alt="Pollo entero Broaster"></div>
-            <div class="product-card"><div class="product-info"><h3>1/2 Broasted</h3><p>4 presas de pollo broasted + papas a la francesa + ensalada</p><span class="price">$20.000</span></div><img src="https://imgur.com/HYZzGqX.jpg" alt="1/2 Broaster"></div>
-            <div class="product-card"><div class="product-info"><h3>1/4 broasted</h3><p>2 presas de pollo broasted + papas fritas + ensalada</p><span class="price">$11.000</span></div><img src="https://imgur.com/uziUsEJ.jpg" alt="1/4 broaster"></div>
-            <div class="product-card"><div class="product-info"><h3>Chop Suey</h3><p>Delicioso Chop Suey con vegetales y camarones.</p><span class="price">$22.000</span></div><img src="https://imgur.com/SUiZIfc.jpg" alt="Chop Suey"></div>
-            <div class="product-card"><div class="product-info"><h3>Arroz Oriental</h3><p>Arroz oriental, exquisita combinación de sabores.</p><span class="price">$20.000</span></div><img src="https://imgur.com/W8uPZZ8.jpg" alt="Arroz Oriental"></div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Pollo asado entero</h3>
+                <p>Pollo entero + papa salada + ensalada + maduro + ají</p>
+                <span class="price">$30.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Pollo asado entero', 30000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/BM44BT8.jpg" alt="Pollo asado entero">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/2 Pollo a la Brasa</h3>
+                <p>4 presas de pollo asado + papa salada + ensalada + maduro + ají</p>
+                <span class="price">$19.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/2 Pollo a la Brasa', 19000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/9lSb6r2.jpg" alt="1/2 Pollo a la Brasa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/4 Pollo a la Brasa</h3>
+                <p>2 presas de pollo asado + papa salada + ensalada + maduro + ají</p>
+                <span class="price">$10.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/4 Pollo a la Brasa', 10000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/AL2a2SZ.jpg" alt="1/4 Pollo a la Brasa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Pollo entero Broaster</h3>
+                <p>8 presas de pollo broasted + papas a la francesa + arepas + maduro + ensalada</p>
+                <span class="price">$38.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Pollo entero Broaster', 38000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/JUn13R3.jpg" alt="Pollo entero Broaster">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/2 Broasted</h3>
+                <p>4 presas de pollo broasted + papas a la francesa + ensalada</p>
+                <span class="price">$20.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/2 Broasted', 20000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/HYZzGqX.jpg" alt="1/2 Broaster">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/4 broasted</h3>
+                <p>2 presas de pollo broasted + papas fritas + ensalada</p>
+                <span class="price">$11.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/4 broasted', 11000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/uziUsEJ.jpg" alt="1/4 broaster">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Churrasco</h3>
+                <p>Delicioso churrasco a la parrilla</p>
+                <span class="price">$20.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Churrasco', 20000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6KmFIuj.jpg" alt="Churrasco">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Pechuga</h3>
+                <p>Pechuga de pollo a la parrilla</p>
+                <span class="price">$19.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Pechuga', 19000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/jhzUUHS.jpg" alt="Pechuga">
+            </div>
+          </div>
+        </div>
+
+        <!-- COMIDA ORIENTAL -->
+        <div class="accordion-item">
+          <button class="accordion-header" data-target="#oriental">
+            <span>🍜 COMIDA ORIENTAL 🍜</span><span class="arrow">▼</span>
+          </button>
+          <div class="accordion-body" id="oriental">
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Arroz Chino</h3>
+                <p>Con presa de pollo</p>
+                <span class="price">$15.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Arroz Chino', 15000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="Arroz Chino">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Arroz con Todas las Carnes</h3>
+                <p>Cebolla, raíz, jamón, pollo, cerdo, camarón</p>
+                <span class="price">$49.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Arroz con Todas las Carnes', 49000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="Arroz con Todas las Carnes">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/2 Arroz con Todas las Carnes</h3>
+                <p>Cebolla, raíz, jamón, pollo, cerdo, camarón</p>
+                <span class="price">$39.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/2 Arroz con Todas las Carnes', 39000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="1/2 Arroz con Todas las Carnes">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/4 Arroz con Todas las Carnes</h3>
+                <p>Cebolla, raíz, jamón, pollo, cerdo, camarón</p>
+                <span class="price">$29.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/4 Arroz con Todas las Carnes', 29000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="1/4 Arroz con Todas las Carnes">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Arroz y Pollo</h3>
+                <p>Cebolla - Jamón el arroz acompañado de 8 presas, ensalada y papa cascos</p>
+                <span class="price">$45.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Arroz y Pollo', 45000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="Arroz y Pollo">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/2 Arroz y Pollo</h3>
+                <p>Cebolla - Jamón el arroz acompañado de 4 presas, ensalada y papa cascos</p>
+                <span class="price">$35.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/2 Arroz y Pollo', 35000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="1/2 Arroz y Pollo">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>1/4 Arroz y Pollo</h3>
+                <p>Cebolla - Jamón el arroz acompañado de 2 presas, ensalada y papa cascos</p>
+                <span class="price">$25.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('1/4 Arroz y Pollo', 25000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="1/4 Arroz y Pollo">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Arroz con Camarones</h3>
+                <p>Delicioso arroz con camarones frescos</p>
+                <span class="price">$35.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Arroz con Camarones', 35000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/W8uPZZ8.jpg" alt="Arroz con Camarones">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Chop Suey </h3>
+                <p>Delicioso Chop Suey con vegetales y camarones.</p>
+                <span class="price">$47.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Chop Suey', 22000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/SUiZIfc.jpg" alt="Chop Suey">
+            </div>
+             <div class="product-card">
+              <div class="product-info">
+                <h3> 1/2 Chop Suey </h3>
+                <p>Delicioso Chop Suey con vegetales y camarones.</p>
+                <span class="price">$37.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Chop Suey', 22000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/SUiZIfc.jpg" alt="Chop Suey">
+            </div>
+             <div class="product-card">
+              <div class="product-info">
+                <h3> 1/4 Chop Suey </h3>
+                <p>Delicioso Chop Suey con vegetales y camarones.</p>
+                <span class="price">$27.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Chop Suey', 22000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/SUiZIfc.jpg" alt="Chop Suey">
+            </div>
           </div>
         </div>
 
         <!-- Acompañamientos -->
         <div class="accordion-item">
-          <button class="accordion-header" data-target="#acomp"><span>🥔 ACOMPAÑAMIENTOS 🥔</span><span class="arrow">▼</span></button>
+          <button class="accordion-header" data-target="#acomp">
+            <span>🥔 ACOMPAÑAMIENTOS 🥔</span><span class="arrow">▼</span>
+          </button>
           <div class="accordion-body" id="acomp">
-            <div class="product-card"><div class="product-info"><h3>Papas a la francesa</h3><p>Papas doradas y crujientes</p><span class="price">$5.500</span></div><img src="https://imgur.com/xTQF5qT.jpg" alt="Papas a la francesa"></div>
-            <div class="product-card"><div class="product-info"><h3>Arroz blanco</h3><p>Acompañamiento clásico colombiano</p><span class="price">$3.000</span></div><img src="https://imgur.com/k2KytYd.jpg" alt="Arroz blanco"></div>
-            <div class="product-card"><div class="product-info"><h3>Plátano maduro</h3><p>Dulce y caramelizado</p><span class="price">$2.000</span></div><img src="https://imgur.com/0gnq7Zb.jpg" alt="Plátano maduro"></div>
-            <div class="product-card"><div class="product-info"><h3>Ensalada</h3><span class="price">$4.000</span></div><img src="https://imgur.com/zXLtVll.jpg" alt="Ensalada"></div>
-            <div class="product-card"><div class="product-info"><h3>Papas saladas</h3><span class="price">$6.000</span></div><img src="https://imgur.com/zcIJQg1.jpg" alt="Papas saladas"></div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Papas a la francesa</h3>
+                <p>Papas doradas y crujientes</p>
+                <span class="price">$5.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Papas a la francesa', 5000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/xTQF5qT.jpg" alt="Papas a la francesa">
+            </div>
+           
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Papas saladas (8 unidades)</h3>
+                <p>8 papas saladas, plátano maduro, ensalada y ají</p>
+                <span class="price">$8.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Papas saladas (8 unidades)', 8000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/zcIJQg1.jpg" alt="Papas saladas">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Papas saladas (4 unidades)</h3>
+                <p>4 papas saladas, maduro, ensalada, ají</p>
+                <span class="price">$6.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Papas saladas (4 unidades)', 6000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/zcIJQg1.jpg" alt="Papas saladas">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Papas saladas (3 unidades)</h3>
+                <p>3 papas saladas, ensalada</p>
+                <span class="price">$5.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Papas saladas (3 unidades)', 5000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/zcIJQg1.jpg" alt="Papas saladas">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Arroz blanco</h3>
+                <p>Acompañamiento clásico colombiano</p>
+                <span class="price">$3.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Arroz blanco', 3000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/k2KytYd.jpg" alt="Arroz blanco">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Plátano maduro</h3>
+                <p>Dulce y caramelizado</p>
+                <span class="price">$2.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Plátano maduro', 2000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/0gnq7Zb.jpg" alt="Plátano maduro">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Ensalada</h3>
+                <span class="price">$4.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Ensalada', 4000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/zXLtVll.jpg" alt="Ensalada">
+            </div>
           </div>
         </div>
 
         <!-- Bebidas -->
         <div class="accordion-item">
-          <button class="accordion-header" data-target="#bebidas"><span>🥤 BEBIDAS 🥤</span><span class="arrow">▼</span></button>
+          <button class="accordion-header" data-target="#bebidas">
+            <span>🥤 BEBIDAS 🥤</span><span class="arrow">▼</span>
+          </button>
           <div class="accordion-body" id="bebidas">
-            <div class="product-card"><div class="product-info"><h3>Gaseosas 1/4</h3><span class="price">$7.500</span></div><img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa"></div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa Litro</h3>
+                <span class="price">$5.500</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa Litro', 5500)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa 1/2 Litro</h3>
+                <span class="price">$7.500</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa 1/2 Litro', 7500)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa 2.5 Litros</h3>
+                <span class="price">$10.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa 2.5 Litros', 10000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa 3 Litros</h3>
+                <span class="price">$12.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa 3 Litros', 12000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa Mini</h3>
+                <span class="price">$2.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa Mini', 2000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa Personal</h3>
+                <span class="price">$3.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa Personal', 3000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
+            <div class="product-card">
+              <div class="product-info">
+                <h3>Gaseosa PET 500ml</h3>
+                <span class="price">$4.000</span>
+                <button class="btn-agregar" onclick="agregarAlPedido('Gaseosa PET 500ml', 4000)">Agregar</button>
+              </div>
+              <img src="https://imgur.com/6A0Cvpx.jpg" alt="Gaseosa">
+            </div>
           </div>
         </div>
       </div>
     </section>
-
-   
   </main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const headers = document.querySelectorAll('.accordion-header');
-      headers.forEach(header => {
-        header.addEventListener('click', function () {
-          const target = document.querySelector(this.dataset.target);
-          const isActive = this.classList.contains('active');
-          document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
-          document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('active'));
-          if (!isActive) {
-            this.classList.add('active');
-            target.classList.add('active');
-          }
-        });
-      });
-      if (headers.length > 0) {
-        headers[0].classList.add('active');
-        const firstBody = document.querySelector(headers[0].dataset.target);
-        if (firstBody) firstBody.classList.add('active');
-      }
-    });
-  </script>
-</body>
-
-  <!-- MODAL -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <h3 id="modal-title"></h3>
-      <ul id="modal-options"></ul>
-      <button class="close-btn" onclick="closeModal()">Cerrar</button>
-    </div>
-  </div>
-<br>
-<br> 
-<br> 
+  <!-- Resto de las secciones (Sobre Nosotros, Features, Reseñas, Contacto) -->
   <!-- SOBRE NOSOTROS -->
   <section class="about" id="nosotros">
     <div class="container">
@@ -1086,14 +1831,13 @@
           <a href="#contacto" class="btn">Contáctanos</a>
         </div>
         <div class="about-img">
-          <img src="https://imgur.com/JuDjlpI.jpg" alt="Interior Croky" onerror="this.src='https: //imgur.com/JuDjlpI.png'">
+          <img src="https://imgur.com/uccqOsY" alt="Interior Croky" onerror="this.src='https://imgur.com/uccqOsY.png'">
         </div>
       </div>
     </div>
   </section>
-<br>
-<br>
-<br>
+
+  <br><br><br>
 
   <!-- FEATURES SECTION -->
   <section class="features">
@@ -1120,9 +1864,8 @@
       </div>
     </div>
   </section>
-<br>
-<br>
-<br>
+
+  <br><br><br>
 
   <!-- RESEÑAS -->
   <section id="reseñas" class="reseñas-section">
@@ -1135,7 +1878,7 @@
 
     <div class="reseñas">
       <div class="caja">
-        <div class="comilla">”</div>
+        <div class="comilla">"</div>
         <p>¡Una tradición familiar! Llevamos viniendo a Croky desde que mis hijos eran pequeños y ahora los traemos a sus hijos. El pollo broaster es perfecto: crujiente por fuera, jugoso por dentro y con ese sabor inigualable. El arroz chino es el mejor de la ciudad. Un clásico que nunca defrauda.</p>
         <div class="estrellas">⭐⭐⭐⭐⭐</div>
         <img src="sofia.jpg" alt="Sofía" onerror="this.src='https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
@@ -1143,7 +1886,7 @@
       </div>
 
       <div class="caja">
-        <div class="comilla">”</div>
+        <div class="comilla">"</div>
         <p>¡Más que comida, es una experiencia! Celebré mi cumpleaños aquí y el trato fue excepcional. La comida es deliciosa (recomiendo totalmente las alitas). Lo que más me gusta es el ambiente acogedor y familiar. ¡Volveremos pronto!</p>
         <div class="estrellas">⭐⭐⭐⭐⭐</div>
         <img src="laura.jpg" alt="Laura" onerror="this.src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
@@ -1151,21 +1894,20 @@
       </div>
 
       <div class="caja">
-        <div class="comilla">”</div>
+        <div class="comilla">"</div>
         <p>Auténtico y consistente. Después de años de vivir en la ciudad, Croky sigue siendo mi referencia para un pollo broaster de calidad. Siempre fresco, siempre sabroso. El único 'problema' es que siempre quiero repetir.</p>
         <div class="estrellas">⭐⭐⭐⭐⭐</div>
         <img src="joseph.jpg" alt="Joseph" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
         <div class="nombre">Joseph Alvarez</div>
-        
       </div>
     </div>
   </section>
-<br>
-<br>
+
+  <br><br>
 
   <!-- CONTACTO -->
   <section id="contacto" class="contacto-section">
-    <h2>Contáctanos y deja tu opinion </h2>
+    <h2>Contáctanos</h2>
     <div class="contacto-content">
       <div class="contacto-info">
         <h3>Información de Contacto</h3>
@@ -1192,6 +1934,178 @@
   </section>
 
   <script>
+    // Variables globales
+    let pedido = [];
+    const lista = document.getElementById('lista-pedido');
+    const totalTexto = document.getElementById('totalTexto');
+    const cartCount = document.getElementById('cartCount');
+
+    // Función para mostrar el pedido
+    function mostrarPedido() {
+      lista.innerHTML = "";
+      let total = 0;
+      let totalItems = 0;
+
+      pedido.forEach((item, index) => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        totalItems += item.cantidad;
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <div>
+            <strong>${item.nombre}</strong>
+            <div class="cantidad-control">
+              <button onclick="cambiarCantidad(${index}, -1)">-</button>
+              <span>${item.cantidad}</span>
+              <button onclick="cambiarCantidad(${index}, 1)">+</button>
+            </div>
+            <span>$${subtotal.toLocaleString()}</span>
+          </div>
+        `;
+        lista.appendChild(li);
+      });
+
+      totalTexto.textContent = "Total: $" + total.toLocaleString();
+      cartCount.textContent = totalItems;
+    }
+
+    // Función para cambiar cantidad
+    function cambiarCantidad(index, cambio) {
+      if (pedido[index]) {
+        pedido[index].cantidad += cambio;
+        
+        if (pedido[index].cantidad <= 0) {
+          pedido.splice(index, 1);
+        }
+        
+        mostrarPedido();
+      }
+    }
+
+    // Función para agregar al pedido
+    function agregarAlPedido(nombre, precio) {
+      const itemExistente = pedido.find(item => item.nombre === nombre);
+      
+      if (itemExistente) {
+        itemExistente.cantidad += 1;
+      } else {
+        pedido.push({
+          nombre: nombre,
+          precio: precio,
+          cantidad: 1
+        });
+      }
+      
+      mostrarPedido();
+      togglePedidoPanel();
+      
+      // Mostrar notificación
+      mostrarNotificacion(`${nombre} agregado al pedido`);
+    }
+
+    // Función para mostrar notificación
+    function mostrarNotificacion(mensaje) {
+      const notificacion = document.createElement('div');
+      notificacion.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #800000;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 1200;
+        font-weight: bold;
+        animation: slideIn 0.3s ease;
+      `;
+      notificacion.textContent = mensaje;
+      document.body.appendChild(notificacion);
+      
+      setTimeout(() => {
+        notificacion.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          document.body.removeChild(notificacion);
+        }, 300);
+      }, 2000);
+    }
+
+    // Función para abrir/cerrar panel de pedidos
+    function togglePedidoPanel() {
+      const panel = document.getElementById('pedidoPanel');
+      panel.classList.toggle('show');
+    }
+
+    // Función para solicitar información del cliente
+    function solicitarInformacionCliente() {
+      if (pedido.length === 0) {
+        alert('Tu pedido está vacío. Agrega algunos productos primero.');
+        return;
+      }
+      
+      document.getElementById('modalCliente').style.display = 'flex';
+    }
+
+    // Función para cerrar modal de cliente
+    function cerrarModalCliente() {
+      document.getElementById('modalCliente').style.display = 'none';
+    }
+
+    // Función para enviar pedido por WhatsApp
+    function enviarPedidoWhatsApp() {
+      const nombre = document.getElementById('nombre').value;
+      const direccion = document.getElementById('direccion').value;
+      const telefono = document.getElementById('telefono').value;
+      const pago = document.getElementById('pago').value;
+      
+      if (!nombre || !direccion || !telefono || !pago) {
+        alert('Por favor completa todos los campos requeridos.');
+        return;
+      }
+      
+      let mensaje = "🚀 *NUEVO PEDIDO - CROKY* 🚀%0A%0A";
+      mensaje += "*INFORMACIÓN DEL CLIENTE:*%0A";
+      mensaje += `👤 Nombre: ${nombre}%0A`;
+      mensaje += `📍 Dirección: ${direccion}%0A`;
+      mensaje += `📞 Teléfono: ${telefono}%0A`;
+      mensaje += `💳 Tipo de Pago: ${pago}%0A%0A`;
+      
+      mensaje += "*DETALLE DEL PEDIDO:*%0A";
+      let total = 0;
+      
+      pedido.forEach(item => {
+        const subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        mensaje += `• ${item.nombre} x${item.cantidad} - $${subtotal.toLocaleString()}%0A`;
+      });
+      
+      mensaje += `%0A💰 *TOTAL: $${total.toLocaleString()}*%0A%0A`;
+      mensaje += "⏰ *Hora del pedido:* " + new Date().toLocaleString() + "%0A%0A";
+      mensaje += "¡Gracias por tu pedido! 🍗";
+      
+      // Número de WhatsApp
+      const numeroWhatsApp = "573105197678";
+      
+      // Crear enlace de WhatsApp
+      const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+      
+      // Abrir en nueva pestaña
+      window.open(urlWhatsApp, '_blank');
+      
+      // Mostrar confirmación
+      alert('¡Pedido enviado correctamente! Serás redirigido a WhatsApp para confirmar tu pedido.');
+      
+      // Limpiar pedido y cerrar modales
+      pedido = [];
+      mostrarPedido();
+      cerrarModalCliente();
+      togglePedidoPanel();
+      
+      // Limpiar formulario
+      document.getElementById('formCliente').reset();
+    }
+
     // Funcionalidad del menú móvil
     const menuBtn = document.getElementById('menuBtn');
     const sideMenu = document.getElementById('sideMenu');
@@ -1202,8 +2116,6 @@
       overlay.classList.toggle('show', isOpen);
       menuBtn.classList.toggle('active', isOpen);
       menuBtn.setAttribute("aria-expanded", isOpen);
-      
-      // Prevenir scroll cuando el menú está abierto
       document.body.style.overflow = isOpen ? 'hidden' : '';
     }
 
@@ -1272,8 +2184,14 @@
     // Cerrar modal al hacer clic fuera de él
     window.addEventListener('click', function(event) {
       const modal = document.getElementById('modal');
+      const modalCliente = document.getElementById('modalCliente');
+      
       if (event.target === modal) {
         closeModal();
+      }
+      
+      if (event.target === modalCliente) {
+        cerrarModalCliente();
       }
     });
 
@@ -1290,6 +2208,42 @@
         }
       });
     });
+
+    // Funcionalidad del acordeón del menú
+    document.addEventListener('DOMContentLoaded', function () {
+      const headers = document.querySelectorAll('.accordion-header');
+      headers.forEach(header => {
+        header.addEventListener('click', function () {
+          const target = document.querySelector(this.dataset.target);
+          const isActive = this.classList.contains('active');
+          document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
+          document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('active'));
+          if (!isActive) {
+            this.classList.add('active');
+            target.classList.add('active');
+          }
+        });
+      });
+      if (headers.length > 0) {
+        headers[0].classList.add('active');
+        const firstBody = document.querySelector(headers[0].dataset.target);
+        if (firstBody) firstBody.classList.add('active');
+      }
+    });
+
+    // Animaciones CSS para notificaciones
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
